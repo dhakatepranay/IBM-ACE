@@ -1,0 +1,15 @@
+
+
+CREATE COMPUTE MODULE Test_Rest_Flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		
+		
+		SET OutputRoot.XMLNSC.Student = InputRoot.JSON.Data;
+		
+		
+		
+		
+	END;
+END MODULE;
