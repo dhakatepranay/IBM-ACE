@@ -1,0 +1,70 @@
+BROKER SCHEMA com.ace.study
+
+
+CREATE COMPUTE MODULE getCustDetails_Flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE FIELD OutputRoot.XMLNSC.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.XMLNSC.Data;
+		
+		--SET OutputRoot = InputRoot;
+		DECLARE rowvar ROW;
+		
+		SET rowvar.Details[] = SELECT c.* FROM Database.customer_details as c;
+		
+		DECLARE J INTEGER CARDINALITY(rowvar.Details[]);
+		
+		DECLARE I INTEGER 1;
+		
+		FOR refIn AS rowvar.Details[] DO
+			SET refOut.Customer_Details[I].ID 			= rowvar.Details[I].id;
+			SET refOut.Customer_Details[I].Name 		= rowvar.Details[I].name;
+			SET refOut.Customer_Details[I].OrderValue 	= rowvar.Details[I].orderValue;
+			SET I = I + 1;
+		END FOR;			
+			
+	RETURN TRUE;
+	
+	END;
+END MODULE;
+
+
+CREATE COMPUTE MODULE insertCustDetails_Flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE FIELD OutputRoot.XMLNSC.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.XMLNSC.Data;
+		
+		DECLARE refIn REFERENCE TO InputRoot.XMLNSC.Data;
+		
+		--SET OutputRoot = InputRoot;
+		--DECLARE rowvar ROW;
+		
+--		SET rowvar.Details[] = SELECT c.* FROM Database.customer_details as c;
+		
+		DECLARE J INTEGER CARDINALITY(InputRoot.XMLNSC.Data.Customer_Details[]);
+		
+		DECLARE I INTEGER 1;
+		
+		FOR ref AS InputRoot.XMLNSC.Data.Customer_Details[] DO
+			INSERT INTO Database.customer_details (id, name, orderValue) VALUES 
+			(refIn.Customer_Details[I].ID, refIn.Customer_Details[I].Name, refIn.Customer_Details[I].OrderValue);
+			SET I = I+1;
+		END FOR;
+		
+		SET refOut.message 	= 'Records inserted successfully.';
+		
+--		FOR refIn AS InputRoot.XMLNSC.Data.Cust[] DO
+--			SET refOut.Customer_Details[I].ID 			= rowvar.Details[I].id;
+--			SET refOut.Customer_Details[I].Name 		= rowvar.Details[I].name;
+--			SET refOut.Customer_Details[I].OrderValue 	= rowvar.Details[I].orderValue;
+--			SET I = I + 1;
+--		END FOR;			
+			
+	RETURN TRUE;
+	
+	END;
+END MODULE;
+
