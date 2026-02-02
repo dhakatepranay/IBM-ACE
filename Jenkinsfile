@@ -23,7 +23,7 @@ pipeline {
           call "C:\\Program Files\\IBM\\ACE\\12.0.12.19\\server\\bin\\mqsiprofile.cmd"
 
           mqsideploy ACE_TEST ^
-            -e default ^
+            -e ACE_Jenkins ^
             -a Test_Rest.bar
         '''
 
@@ -32,3 +32,4 @@ pipeline {
     }
   }
 }
+
