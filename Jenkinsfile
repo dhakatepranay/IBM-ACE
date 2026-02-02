@@ -5,7 +5,7 @@ pipeline {
       stage('checkout code') {
          steps {
             deleteDir()
-            git 'https://github.com/dhakatepranay/IBM-ACE.git'
+            git branch: 'main', 'https://github.com/dhakatepranay/IBM-ACE.git'
          }
       }
       stage('build bar') {
@@ -33,3 +33,4 @@ archiveArtifacts 'test.bar'
  }
    }
 }
+
