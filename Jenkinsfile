@@ -11,7 +11,8 @@ pipeline {
       }
       stage('build bar') {
         steps {
-        bat label: '', script: '''
+        bat '''
+           call "C:\\Program Files\\IBM\\ACE\\12.0.12.19\\server\\bin\\mqsiprofile.cmd"
 echo off
 set projectName=Test_Rest
 "C:\\Program Files\\IBM\\ACE\\12.0.12.19\\server\\bin\\mqsicreatebar.exe" -data . -b %projectName%.bar -a %projectName% -cleanBuild
@@ -34,5 +35,6 @@ archiveArtifacts 'test.bar'
  }
    }
 }
+
 
 
