@@ -4,8 +4,7 @@ pipeline {
    stages {
       stage('checkout code') {
          steps {
-            git branch: 'main',
-            git 'https://github.com/dhakatepranay/IBM-ACE.git'
+            git branch: 'main', 'https://github.com/dhakatepranay/IBM-ACE.git'
          }
       }
       stage('Build BAR') {
@@ -27,4 +26,5 @@ pipeline {
       }
     }
   }
+
 }
