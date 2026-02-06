@@ -1,0 +1,30 @@
+BROKER SCHEMA com.ace.study
+
+
+CREATE COMPUTE MODULE xml2csv_flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE FIELD OutputRoot.DFDL.xml2csv.header;
+		DECLARE refHeader REFERENCE TO OutputRoot.DFDL.xml2csv.header;
+		
+		SET refHeader.Id      = 'Id';
+		SET refHeader.Name    = 'Name';
+		SET refHeader.Product = 'Product';
+		
+		DECLARE I INTEGER 1;
+		DECLARE refIN REFERENCE TO InputRoot.XMLNSC.Orders.order[1];
+		
+		WHILE LASTMOVE(refIN) DO
+			CREATE FIELD OutputRoot.DFDL.xml2csv.record;
+			DECLARE refRecord REFERENCE TO OutputRoot.DFDL.xml2csv;
+			SET refRecord.record[I].Id 		= refIN.Id;
+			SET refRecord.record[I].Name 	= refIN.Name;
+			SET refRecord.record[I].Product = refIN.Product;
+			SET I = I + 1;
+		MOVE refIN NEXTSIBLING;
+		END WHILE;
+		
+		RETURN TRUE;
+	END;
+END MODULE;
