@@ -1,0 +1,28 @@
+BROKER SCHEMA com.ace.study
+
+
+CREATE COMPUTE MODULE json2xml_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		DECLARE refIn REFERENCE TO InputRoot.JSON.Data;
+		
+		CREATE LASTCHILD OF OutputRoot DOMAIN('XMLNSC');
+		CREATE FIELD OutputRoot.XMLNSC.Employee;
+		DECLARE refOut REFERENCE TO OutputRoot.XMLNSC.Employee;
+		
+		SET refOut.EmployeeId = refIn.employeeId;
+		
+		DECLARE I INTEGER 1;
+		DECLARE refSkills REFERENCE TO refIn.skills.Item[1];
+		
+		WHILE LASTMOVE(refSkills) DO
+			SET refOut.Skills.Skill[I] = refSkills;
+			SET I = I + 1;
+			MOVE refSkills NEXTSIBLING;
+		END WHILE;
+
+		RETURN TRUE;
+	
+	END;
+END MODULE;
