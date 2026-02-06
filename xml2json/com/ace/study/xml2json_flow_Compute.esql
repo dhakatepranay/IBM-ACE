@@ -1,0 +1,32 @@
+BROKER SCHEMA com.ace.study
+
+
+CREATE COMPUTE MODULE xml2json_flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		DECLARE refIn REFERENCE TO InputRoot.XMLNSC;
+		
+		CREATE LASTCHILD OF OutputRoot Domain('JSON');
+		
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.JSON.Data;
+		
+		SET refOut.orderId 	= refIn.Order.OrderId;
+		SET refOut.customer = refIn.Order.Customer;
+		
+		CREATE FIELD refOut.items IDENTITY(JSON.Array)items;
+		DECLARE I INTEGER 1;
+		DECLARE refItems REFERENCE TO refIn.Order.Items.Item[1];
+		
+		WHILE LASTMOVE(refItems) DO
+			SET refOut.items.item[I].id 	= refItems.Id;
+			SET refOut.items.item[I].name 	= refItems.Name;
+			SET I = I + 1;
+			MOVE refItems NEXTSIBLING;
+		END WHILE;
+		
+		RETURN TRUE;
+	END;
+
+END MODULE;
