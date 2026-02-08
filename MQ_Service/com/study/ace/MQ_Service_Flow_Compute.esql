@@ -1,0 +1,36 @@
+BROKER SCHEMA com.study.ace
+
+
+CREATE COMPUTE MODULE Transformation
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		CALL CopyEntireMessage();
+		
+		DECLARE varInt CHAR 'A';
+		
+		SET OutputRoot.XMLNSC.Details = CAST(varInt AS INTEGER);
+		
+		
+		RETURN TRUE;
+	END;
+	
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE ErrorResp
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		CALL CopyEntireMessage();
+		
+		
+		RETURN TRUE;
+	END;
+	
+	CREATE PROCEDURE CopyEntireMessage() BEGIN
+		SET OutputRoot = InputRoot;
+	END;
+END MODULE;
