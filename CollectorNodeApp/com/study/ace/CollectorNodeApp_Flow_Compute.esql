@@ -1,0 +1,14 @@
+BROKER SCHEMA com.study.ace
+
+
+CREATE COMPUTE MODULE CollectorNodeApp_Flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		
+		SET OutputRoot.JSON.Data.OrderDetails[1].BillInfo = InputRoot.Collection.IN01.JSON.Data;
+		
+		SET OutputRoot.JSON.Data.OrderDetails[2].Customer = InputRoot.Collection.IN02.JSON.Data.Customer;
+		
+	END;
+END MODULE;
