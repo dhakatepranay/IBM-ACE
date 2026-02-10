@@ -10,8 +10,8 @@ pipeline {
 
           mqsicreatebar ^
             -data "%WORKSPACE%" ^
-            -b Test_Rest.bar ^
-            -a Test_Rest ^
+            -b CollectorNodeApp_v1.0.bar ^
+            -a CollectorNodeApp ^
             -cleanBuild
         '''
       }
@@ -22,9 +22,9 @@ pipeline {
         bat '''
           call "C:\\Program Files\\IBM\\ACE\\12.0.12.19\\server\\bin\\mqsiprofile.cmd"
 
-          mqsideploy ACE_TEST ^
-            -e ACE_Jenkins ^
-            -a Test_Rest.bar
+          mqsideploy ACE_DEV_CICD ^
+            -e DEV_EG ^
+            -a CollectorNodeApp_v1.0.bar
         '''
 
         archiveArtifacts artifacts: 'Test_Rest.bar'
@@ -32,4 +32,5 @@ pipeline {
     }
   }
 }
+
 
