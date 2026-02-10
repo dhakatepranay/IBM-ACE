@@ -3,7 +3,6 @@
 	<name>CollectorNodeApp</name>
 	<comment></comment>
 	<projects>
-		<project>SharedLib</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
