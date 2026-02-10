@@ -27,10 +27,11 @@ pipeline {
             -a CollectorNodeApp_v1.0.bar
         '''
 
-        archiveArtifacts artifacts: 'Test_Rest.bar'
+        archiveArtifacts artifacts: 'CollectorNodeApp_v1.0.bar'
       }
     }
   }
 }
+
 
 
