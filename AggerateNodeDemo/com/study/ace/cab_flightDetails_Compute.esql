@@ -1,0 +1,48 @@
+BROKER SCHEMA com.study.ace
+
+
+CREATE COMPUTE MODULE cabDetails
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		
+		SET OutputRoot.JSON.Data.Cab_Details.cab_name 		= 'Uber';
+		SET OutputRoot.JSON.Data.Cab_Details.passenger_name = 'Pranay D';
+		SET OutputRoot.JSON.Data.Cab_Details.Date 			= CURRENT_TIMESTAMP;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+END MODULE;
+
+CREATE COMPUTE MODULE flightDetails
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		CALL CopyMessageHeaders();
+		
+		SET OutputRoot.JSON.Data.Flight_Details.flight_name = 'Air India';
+		SET OutputRoot.JSON.Data.Flight_Details.flight_id 	= '1966390';
+		SET OutputRoot.JSON.Data.Flight_Details.Date 		= CURRENT_TIMESTAMP;
+		
+		RETURN TRUE;
+	END;
+
+	CREATE PROCEDURE CopyMessageHeaders() BEGIN
+		DECLARE I INTEGER 1;
+		DECLARE J INTEGER;
+		SET J = CARDINALITY(InputRoot.*[]);
+		WHILE I < J DO
+			SET OutputRoot.*[I] = InputRoot.*[I];
+			SET I = I + 1;
+		END WHILE;
+	END;
+END MODULE;
