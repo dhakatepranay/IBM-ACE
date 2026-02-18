@@ -1,0 +1,33 @@
+BROKER SCHEMA com.study.ace
+
+
+CREATE COMPUTE MODULE EncryptModule
+    CREATE FUNCTION Main() RETURNS BOOLEAN
+    
+    BEGIN
+    	
+        DECLARE pan CHARACTER;
+        DECLARE encryptedPan CHARACTER;
+        
+        DECLARE refIn REFERENCE TO InputRoot.JSON.Data.Customer;
+        
+        CREATE FIELD OutputRoot.JSON.Data.Customer;
+        DECLARE refOut REFERENCE TO OutputRoot.JSON.Data.Customer;
+
+        SET pan = refIn.passport_num;
+        CALL Encrypt(pan) INTO encryptedPan;
+        
+        SET refOut.name 		= refIn.cust_name;
+		SET refOut.travel_date 	= refIn.travel_date;
+		SET refOut.passport_num = encryptedPan;
+		
+        RETURN TRUE;
+    END;
+    
+ 	CREATE PROCEDURE Encrypt(IN inputString CHARACTER)
+ 	RETURNS CHARACTER
+    LANGUAGE JAVA
+    EXTERNAL NAME "com.crypto.util.CryptoUtil.encrypt";
+
+END MODULE;
+
