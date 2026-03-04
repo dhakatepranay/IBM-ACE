@@ -11,7 +11,7 @@ CREATE COMPUTE MODULE getCustDetails_Flow_Compute
 		--SET OutputRoot = InputRoot;
 		DECLARE rowvar ROW;
 		
-		SET rowvar.Details[] = SELECT c.* FROM Database.customer_details as c;
+		SET rowvar.Details[] = SELECT c.* FROM Database.customer_details as c; 
 		
 		DECLARE J INTEGER CARDINALITY(rowvar.Details[]);
 		
