@@ -1,0 +1,18 @@
+BROKER SCHEMA com.study.ace
+
+
+CREATE COMPUTE MODULE subService02_flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE LASTCHILD OF OutputRoot DOMAIN('JSON');
+		
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.JSON.Data;
+		
+		SET refOut.subService01.code = 2;
+		SET refOut.subService01.message = 'Success';
+
+		RETURN TRUE;
+	END;
+END MODULE;
