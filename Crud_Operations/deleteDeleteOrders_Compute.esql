@@ -1,0 +1,28 @@
+
+
+CREATE COMPUTE MODULE deleteDeleteOrders_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE FIELD OutputRoot.XMLNSC.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.XMLNSC.Data;
+		
+		DECLARE rowvar ROW;
+		
+		SET rowvar.Details[] = SELECT c.* FROM Database.customer_details as c; 
+		
+		DECLARE J INTEGER CARDINALITY(rowvar.Details[]);
+		
+		DECLARE I INTEGER 1;
+		
+		FOR refIn AS rowvar.Details[] DO
+			SET refOut.Customer_Details[I].ID 			= rowvar.Details[I].id;
+			SET refOut.Customer_Details[I].Name 		= rowvar.Details[I].name;
+			SET refOut.Customer_Details[I].OrderValue 	= rowvar.Details[I].orderValue;
+			SET I = I + 1;
+		END FOR;
+		
+		RETURN TRUE;
+	END;
+	
+END MODULE;

@@ -1,0 +1,30 @@
+
+
+CREATE COMPUTE MODULE getGetOrders_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+		
+		CREATE FIELD OutputRoot.JSON.Data;
+		DECLARE refOut REFERENCE TO OutputRoot.JSON.Data;
+		
+		DECLARE refIn REFERENCE TO InputRoot.JSON.Data; 
+		
+		DECLARE rowvar ROW;
+		
+		SET rowvar.Details[] = SELECT c.* FROM Database.order_details as c WHERE c.id = refIn.id; 
+		
+		DECLARE J INTEGER CARDINALITY(rowvar.Details[]);
+		
+		DECLARE I INTEGER 1;
+		
+		FOR refIn AS rowvar.Details[] DO
+			SET refOut.Customer_Details[I].ID 			= rowvar.Details[I].id;
+			SET refOut.Customer_Details[I].P_Name 		= rowvar.Details[I].product;
+			SET refOut.Customer_Details[I].OrderValue 	= rowvar.Details[I].price;
+			SET I = I + 1;
+		END FOR;
+		
+		RETURN TRUE;
+	END;
+	
+END MODULE;

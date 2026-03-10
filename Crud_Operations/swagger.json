@@ -1,0 +1,127 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "title" : "Crud_Operations",
+    "version" : "1.0.0",
+    "description" : "Crud_Operations"
+  },
+  "paths" : {
+    "/getOrders" : {
+      "get" : {
+        "operationId" : "getGetOrders",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful.",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Retrieve getOrders"
+      }
+    },
+    "/deleteOrders" : {
+      "delete" : {
+        "operationId" : "deleteDeleteOrders",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "produces" : [ "application/json" ],
+        "description" : "Remove from deleteOrders"
+      }
+    },
+    "/updateOrders" : {
+      "put" : {
+        "operationId" : "putUpdateOrders",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Update updateOrders",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        } ]
+      },
+      "patch" : {
+        "operationId" : "patchUpdateOrders",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Update updateOrders ",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        } ]
+      }
+    },
+    "/insertOrders" : {
+      "put" : {
+        "operationId" : "putInsertOrders",
+        "responses" : {
+          "200" : {
+            "description" : "The operation was successful."
+          }
+        },
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "description" : "Update insertOrders",
+        "parameters" : [ {
+          "name" : "body",
+          "in" : "body",
+          "schema" : {
+            "type" : "string"
+          },
+          "description" : "The request body for the operation",
+          "required" : true
+        } ]
+      }
+    }
+  },
+  "basePath" : "/crud_operations/v1",
+  "definitions" : {
+    "OrderDetails" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "object",
+          "properties" : { }
+        },
+        "product" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "string"
+        }
+      }
+    },
+    "OutputDetails" : {
+      "type" : "object",
+      "properties" : {
+        "message" : {
+          "type" : "string"
+        }
+      }
+    }
+  }
+}
